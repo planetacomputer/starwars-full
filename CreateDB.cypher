@@ -1,5 +1,4 @@
--- Load the films and their directors and producers
-LOAD CSV WITH HEADERS FROM "file:///films.csv" 
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/planetacomputer/starwars-full/refs/heads/main/films.csv" 
     AS row 
     UNWIND split(row.producer, ",") AS producer
     MERGE (f:Film {name: trim(row.title), 
@@ -11,8 +10,7 @@ LOAD CSV WITH HEADERS FROM "file:///films.csv"
 
 
 
--- Load the characters
-LOAD CSV WITH HEADERS FROM "file:///characters.csv" 
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/planetacomputer/starwars-full/refs/heads/main/characters.csv" 
     AS row
     MERGE (c:Character {name: row.name})
     FOREACH(
@@ -45,8 +43,7 @@ LOAD CSV WITH HEADERS FROM "file:///characters.csv"
         c.descripcion = row.description;
 
 
--- Load the planets
-LOAD CSV WITH HEADERS FROM "file:///planets.csv" 
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/planetacomputer/starwars-full/refs/heads/main/planets.csv" 
     AS row
     UNWIND split(row.terrain, ',') AS terrain
     UNWIND split(row.climate, ',') AS climate
@@ -68,9 +65,7 @@ LOAD CSV WITH HEADERS FROM "file:///planets.csv"
         p.surface_water = toIntegerOrNull(row.surface_water);
 
 
--- Load the organizations
-
-LOAD CSV WITH HEADERS FROM "file:///organizations.csv" 
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/planetacomputer/starwars-full/refs/heads/main/organizations.csv" 
     AS row
     UNWIND split(row.leader, ",") AS leader
     UNWIND split(row.members, ",") AS member
@@ -95,8 +90,7 @@ LOAD CSV WITH HEADERS FROM "file:///organizations.csv"
         o.dissolved = toInteger(row.dissolved),
         o.description = row.description;
 
--- Load the species
-LOAD CSV WITH HEADERS FROM "file:///species.csv" 
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/planetacomputer/starwars-full/refs/heads/main/species.csv" 
     AS row
     MERGE (s:Species {name: row.name})
     FOREACH(
@@ -121,8 +115,7 @@ LOAD CSV WITH HEADERS FROM "file:///species.csv"
         s.average_lifespan = toIntegerOrNull(row.average_lifespan),
         s.language = row.language;
 
--- Load the Vehicles
-LOAD CSV WITH HEADERS FROM "file:///vehicles.csv" 
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/planetacomputer/starwars-full/refs/heads/main/vehicles.csv" 
     AS row
     UNWIND CASE row.pilots 
             WHEN "None" THEN NULL 
@@ -149,8 +142,7 @@ LOAD CSV WITH HEADERS FROM "file:///vehicles.csv"
         v.cargo_capacity = toFloatOrNull(row.cargo_capacity);
 
 
--- Load the Quotes and its relations with their author and film where they used it
-LOAD CSV WITH HEADERS FROM "file:///quotes.csv" 
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/planetacomputer/starwars-full/refs/heads/main/quotes.csv" 
     AS row 
     MERGE (q:Quote {text: trim(row.quote)})
     MERGE (c:Character {name: trim(row.character_name)})
@@ -158,8 +150,7 @@ LOAD CSV WITH HEADERS FROM "file:///quotes.csv"
     MERGE (q)-[:QUOTE_FROM]->(c)
     MERGE (q)-[:SAID_IN]->(f);
 
--- Load the Starships and its related data
-LOAD CSV WITH HEADERS FROM "file:///starships.csv" 
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/planetacomputer/starwars-full/refs/heads/main/starships.csv" 
     AS row 
     UNWIND CASE row.pilots 
             WHEN "None" THEN null 
@@ -185,8 +176,7 @@ LOAD CSV WITH HEADERS FROM "file:///starships.csv"
         s.cargo_capacity = toFloatOrNull(row.cargo_capacity),
         s.hyperdrive_rating = toFloatOrNull(row.hyperdrive_rating);
 
--- Load the Weapons and their related data
-LOAD CSV WITH HEADERS FROM "file:///weapons.csv" 
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/planetacomputer/starwars-full/refs/heads/main/weapons.csv" 
     AS row 
     UNWIND CASE row.manufacturer WHEN "Various" THEN NULL ELSE split(row.manufacturer, ",") END AS manufacturer
     UNWIND split(row.type, "/") AS weapon_type
