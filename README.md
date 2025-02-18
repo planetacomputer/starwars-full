@@ -7,7 +7,7 @@ Obtained from https://www.kaggle.com/code/jsphyg/star-wars-starter-for-csv/input
 ![image](graph.svg)
 
 
-
+<!-- 
   CALL apoc.periodic.iterate(
   "MATCH (n) RETURN n",
   "DETACH DELETE n",
@@ -16,3 +16,4 @@ Obtained from https://www.kaggle.com/code/jsphyg/star-wars-starter-for-csv/input
   
   
   CALL apoc.schema.assert({},{},true) YIELD label, key RETURN *
+  -->
